@@ -11,34 +11,31 @@ source:
   sha256: 5cac870d6d269cdd71d28def4cae310c609c02aac636c0831176188f16021f44
 
 build:
-  # s390x missing orjson
-  skip: true  # [py<37 or s390x]
-  number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed -vvv
+  number: 3
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
     - {{ compiler('c') }}
   host:
     - python
-    - numpy {{ numpy }}
+    # at the time of writing
+    # numpy is globally pinned to 1.21 at build time
+    # and will export constraints that will require
+    # numpy 1.21 or greater at run time
+    - numpy
     - pip
-    - setuptools
-    - wheel
     - poetry-core >=1.1.0a6
   run:
     - python
-    - {{ pin_compatible('numpy') }} 
-    - numpy >=1.24  # [py>=311]
     - dash >=2.2.0,<3.0.0
+    - flask-cors >=3.0.10,<4.0.0
     - jupyter-dash >=0.4.2
+    - python-kaleido ==0.2.1
     - orjson >=3.8.0,<4.0.0
     - pandas >=1.3.5,<2.0.0
     - plotly >=5.5.0,<6.0.0
     - trace-updater >=0.0.8
-    # Optional dependencies:
-    - flask-cors >=3.0.10,<4.0.0
-    #- python-kaleido ==0.2.1
 
 test:
   imports:
@@ -52,18 +49,10 @@ test:
 
 about:
   home: https://github.com/predict-idlab/plotly-resampler
-  license: MIT
-  license_family: MIT
-  license_file: LICENSE
+  doc_url: https://predict-idlab.github.io/plotly-resampler/
   summary: Visualizing large time series with plotly
-  description: |
-    Plotly is an awesome interactive visualization library, however it can get pretty slow 
-    when a lot of data points are visualized (100 000+ datapoints). Plotly-resampler 
-    solves this by downsampling (aggregating) the data respective to the view and then 
-    plotting the aggregated points. When you interact with the plot (panning, zooming, ...), 
-    callbacks are used to aggregate data and update the figure.
-  doc_url: https://github.com/predict-idlab/plotly-resampler/blob/main/README.md
-  dev_url: https://github.com/predict-idlab/plotly-resampler
+  license: LicenseRef-plotly-resampler
+  license_file: LICENSE
 
 extra:
   recipe-maintainers:
