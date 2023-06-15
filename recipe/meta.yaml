@@ -25,7 +25,7 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - poetry-core 1.4.0
+    - poetry-core 1.5.1
   run:
     - python
     - {{ pin_compatible('numpy') }} 
