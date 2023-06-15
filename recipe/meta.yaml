@@ -25,11 +25,12 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - poetry-core >=1.1.0a6
+    - poetry-core 1.5.1
   run:
     - python
-    - {{ pin_compatible('numpy') }} 
-    - numpy >=1.24  # [py>=311]
+    # numpy pinnings https://github.com/predict-idlab/plotly-resampler/blob/c60833eb4382b3072cb591b36de737dbf769a5ea/pyproject.toml#L43-L45
+    - {{ pin_compatible('numpy') }}  # [py<311]
+    - numpy >=1.24                   # [py>=311]
     - dash >=2.2.0,<3.0.0
     - jupyter-dash >=0.4.2
     - orjson >=3.8.0,<4.0.0
