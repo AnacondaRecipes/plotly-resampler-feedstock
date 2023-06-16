@@ -13,7 +13,7 @@ source:
 build:
   # s390x missing orjson
   skip: true  # [py<37 or s390x]
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed -vvv
 
 requirements:
