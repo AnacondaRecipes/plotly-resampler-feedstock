@@ -13,7 +13,7 @@ source:
 build:
   # s390x missing orjson
   skip: true  # [py<37 or s390x]
-  number: 1
+  number: 2
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed -vvv
 
 requirements:
@@ -25,7 +25,7 @@ requirements:
     - pip
     - setuptools
     - wheel
-    - poetry-core 1.5.1
+    - poetry-core 1.5
   run:
     - python
     # numpy pinnings https://github.com/predict-idlab/plotly-resampler/blob/c60833eb4382b3072cb591b36de737dbf769a5ea/pyproject.toml#L43-L45
