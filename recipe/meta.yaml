@@ -9,16 +9,20 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
   sha256: 5cac870d6d269cdd71d28def4cae310c609c02aac636c0831176188f16021f44
+  patches:
+    - patches/0001-Relax-pandas-version-constraint.patch
 
 build:
   # s390x missing orjson
   skip: true  # [py<37 or s390x]
-  number: 2
+  number: 3
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed -vvv
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - patch # [not win]
+    - m2-patch  # [win]
   host:
     - python
     - numpy {{ numpy }}
@@ -34,7 +38,7 @@ requirements:
     - dash >=2.2.0,<3.0.0
     - jupyter-dash >=0.4.2
     - orjson >=3.8.0,<4.0.0
-    - pandas >=1.3.5,<2.0.0
+    - pandas >=1
     - plotly >=5.5.0,<6.0.0
     - trace-updater >=0.0.8
     # Optional dependencies:
