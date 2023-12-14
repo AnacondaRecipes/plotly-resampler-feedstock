@@ -1,12 +1,26 @@
-From eb82be861486861535c3422821d94bdf66c9ddd4 Mon Sep 17 00:00:00 2001
+From 239bd986ef1a81b78a2bdf867ba9cd87b3eb895c Mon Sep 17 00:00:00 2001
 From: Jean-Christophe Morin <jcmorin@anaconda.com>
 Date: Wed, 13 Dec 2023 13:34:01 -0500
 Subject: [PATCH] Relax pandas version constraint
 
 ---
- pyproject.toml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plotly_resampler/figure_resampler/figure_resampler_interface.py | 2 +-
+ pyproject.toml                                                  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/plotly_resampler/figure_resampler/figure_resampler_interface.py b/plotly_resampler/figure_resampler/figure_resampler_interface.py
+index 523d569..b5d4c24 100644
+--- a/plotly_resampler/figure_resampler/figure_resampler_interface.py
++++ b/plotly_resampler/figure_resampler/figure_resampler_interface.py
+@@ -511,7 +511,7 @@ class AbstractFigureAggregator(BaseFigure, ABC):
+                 return None
+             elif reference_tz is not None:
+                 if ts.tz is not None:
+-                    assert ts.tz.zone == reference_tz.zone
++                    assert ts.tz.__str__() == reference_tz.__str__()
+                     return ts
+                 else:  # localize -> time remains the same
+                     return ts.tz_localize(reference_tz)
 diff --git a/pyproject.toml b/pyproject.toml
 index 5a4cbdf..5f4dfc1 100644
 --- a/pyproject.toml
