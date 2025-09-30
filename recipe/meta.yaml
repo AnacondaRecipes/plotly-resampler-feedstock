@@ -1,49 +1,50 @@
 {% set name = "plotly-resampler" %}
-{% set version = "0.8.3.2" %}
-
+{% set version = "0.11.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
-  sha256: 5cac870d6d269cdd71d28def4cae310c609c02aac636c0831176188f16021f44
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: e3f9ceeb5749de9a85d39755f50711a7d6a28eb1b284da250251c8896ccc1cfd
   patches:
     - patches/0001-Relax-pandas-version-constraint.patch
 
 build:
   # s390x missing orjson
   skip: true  # [py<37 or s390x]
-  number: 3
+  number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed -vvv
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - patch # [not win]
+    - patch  # [not win]
     - m2-patch  # [win]
   host:
     - python
     - numpy {{ numpy }}
     - pip
-    - setuptools
-    - wheel
-    - poetry-core 1.5
+    - poetry-core
   run:
     - python
     # numpy pinnings https://github.com/predict-idlab/plotly-resampler/blob/c60833eb4382b3072cb591b36de737dbf769a5ea/pyproject.toml#L43-L45
     - {{ pin_compatible('numpy') }}  # [py<311]
-    - numpy >=1.24                   # [py>=311]
-    - dash >=2.2.0,<3.0.0
+    - numpy >=2.0  # [py>=313]
+    - dash >=2.11.0
     - jupyter-dash >=0.4.2
-    - orjson >=3.8.0,<4.0.0
-    - pandas >=1
-    - plotly >=5.5.0,<6.0.0
+    - orjson >=3.10.0,<4.0.0
+    - pandas >=2.2.3  # [py>=313]
+    - plotly >=5.5.0,<7.0.0
     - trace-updater >=0.0.8
     # Optional dependencies:
     - flask-cors >=3.0.10,<4.0.0
     #- python-kaleido ==0.2.1
+    - tsdownsample >=0.1.3
+  run_constrained:
+    - flask_cors >=4.0.2,<5.0.0
+    - python-kaleido 0.2.1
 
 test:
   imports:
@@ -62,10 +63,10 @@ about:
   license_file: LICENSE
   summary: Visualizing large time series with plotly
   description: |
-    Plotly is an awesome interactive visualization library, however it can get pretty slow 
-    when a lot of data points are visualized (100 000+ datapoints). Plotly-resampler 
-    solves this by downsampling (aggregating) the data respective to the view and then 
-    plotting the aggregated points. When you interact with the plot (panning, zooming, ...), 
+    Plotly is an awesome interactive visualization library, however it can get pretty slow
+    when a lot of data points are visualized (100 000+ datapoints). Plotly-resampler
+    solves this by downsampling (aggregating) the data respective to the view and then
+    plotting the aggregated points. When you interact with the plot (panning, zooming, ...),
     callbacks are used to aggregate data and update the figure.
   doc_url: https://github.com/predict-idlab/plotly-resampler/blob/main/README.md
   dev_url: https://github.com/predict-idlab/plotly-resampler
