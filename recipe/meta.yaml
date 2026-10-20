@@ -49,13 +49,13 @@ requirements:
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_aggregators.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_figure_resampler_selenium.py" %}
 {% set deselect_tests = " --deselect=tests/test_figure_resampler.py::test_various_dtypes" %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_figure_resampler.py::test_fr_update_layout_axes_range"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_figure_resampler.py::test_fr_update_layout_axes_range_no_update"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_serialization.py::test_copy_and_deepcopy_figurewidget_resampler"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_serialization.py::test_copy_figurewidget_resampler_registered"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_serialization.py::test_deepcopy_figurewidget_resampler_registered"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_utils.py::test_is_figurewidget"' %}
-{% set deselect_tests = 'deselect_tests + " --deselect=tests/test_utils.py::test_is_fwr"' %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_figure_resampler.py::test_fr_update_layout_axes_range" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_figure_resampler.py::test_fr_update_layout_axes_range_no_update" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_serialization.py::test_copy_and_deepcopy_figurewidget_resampler" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_serialization.py::test_copy_figurewidget_resampler_registered" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_serialization.py::test_deepcopy_figurewidget_resampler_registered" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_utils.py::test_is_figurewidget" %}
+{% set deselect_tests = deselect_tests + " --deselect=tests/test_utils.py::test_is_fwr" %}
 
 test:
   source_files:
