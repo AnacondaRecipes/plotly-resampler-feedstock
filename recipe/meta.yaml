@@ -74,6 +74,8 @@ test:
     - selenium >=4.2.0
     - anywidget >=0.9.13,<1
     - python-kaleido ==0.2.1
+    # Needed for `dash`
+    - setuptools
 
 about:
   home: https://github.com/predict-idlab/plotly-resampler
