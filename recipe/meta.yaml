@@ -69,11 +69,11 @@ test:
     - pytest -vv tests {{ ignore_tests }} {{ deselect_tests }}
   requires:
     - pip
-    - pytest >=7.2.0,<8
+    - pytest >=8.3.4  # [win and arm64]
+    - pytest >=7.2.0,<8  # [not (win and arm64)]
     # The selenium version must be ==4.2.0, relaxed for the tests:
     - selenium >=4.2.0
     - anywidget >=0.9.13,<1
-    - python-kaleido ==0.2.1
     # Needed for `dash`
     - setuptools
 
