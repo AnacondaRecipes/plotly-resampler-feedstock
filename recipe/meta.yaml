@@ -1,6 +1,5 @@
 {% set name = "plotly-resampler" %}
-{% set version = "0.11.0" %}
-
+{% set version = "0.11.1" %}
 
 package:
   name: {{ name|lower }}
@@ -8,7 +7,7 @@ package:
 
 source:
   url: https://github.com/predict-idlab/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 173e1798acb70c149fa6be4a3c1b2f77a459b90565961b83418f4ddad090607b
+  sha256: f5e406a70ce7d6dd51ca8ba269f221dd65c3145a0d6fe4f26ed50e7ae22c4b64
 
 build:
   number: 0
@@ -25,7 +24,7 @@ requirements:
     - pip
     - wheel
     - setuptools
-    - poetry-core 2.2.0
+    - poetry-core 2.5.0
   run:
     - python
     - plotly >=5.5.0,<7.0.0
@@ -42,16 +41,16 @@ requirements:
     - python-kaleido ==0.2.1
 
 # E   ModuleNotFoundError: No module named 'pytest_lazyfixture' - pytest-lazy-fixture = "^0.6.3"
+# E   ModuleNotFoundError: No module named 'seleniumwire' - selenium-wire = "^5.0"
+# >   def __copy__(self):
+# >   raise NotImplementedError("Widgets cannot be copied; custom implementation required")
+# E   NotImplementedError: Widgets cannot be copied; custom implementation required
 {% set ignore_tests = " --ignore=tests/test_rangeslider.py" %}
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_aggregators.py" %}
-# E   ModuleNotFoundError: No module named 'seleniumwire' - selenium-wire = "^5.0"
 {% set ignore_tests = ignore_tests + " --ignore=tests/test_figure_resampler_selenium.py" %}
 {% set deselect_tests = " --deselect=tests/test_figure_resampler.py::test_various_dtypes" %}
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_figure_resampler.py::test_fr_update_layout_axes_range" %}
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_figure_resampler.py::test_fr_update_layout_axes_range_no_update" %}
-# >   def __copy__(self):
-# >   raise NotImplementedError("Widgets cannot be copied; custom implementation required")
-# E   NotImplementedError: Widgets cannot be copied; custom implementation required
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_serialization.py::test_copy_and_deepcopy_figurewidget_resampler" %}
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_serialization.py::test_copy_figurewidget_resampler_registered" %}
 {% set deselect_tests = deselect_tests + " --deselect=tests/test_serialization.py::test_deepcopy_figurewidget_resampler_registered" %}
@@ -67,7 +66,7 @@ test:
     - plotly_resampler.figure_resampler.figure_resampler_interface
   commands:
     - pip check
-    - pytest -v tests {{ ignore_tests }} {{ deselect_tests }}
+    - pytest -vv tests {{ ignore_tests }} {{ deselect_tests }}
   requires:
     - pip
     - pytest >=7.2.0,<8
@@ -75,6 +74,8 @@ test:
     - selenium >=4.2.0
     - anywidget >=0.9.13,<1
     - python-kaleido ==0.2.1
+    # Needed for `dash`
+    - setuptools
 
 about:
   home: https://github.com/predict-idlab/plotly-resampler
@@ -83,10 +84,10 @@ about:
   license_file: LICENSE
   summary: Visualizing large time series with plotly
   description: |
-    Plotly is an awesome interactive visualization library, however it can get pretty slow 
-    when a lot of data points are visualized (100 000+ datapoints). Plotly-resampler 
-    solves this by downsampling (aggregating) the data respective to the view and then 
-    plotting the aggregated points. When you interact with the plot (panning, zooming, ...), 
+    Plotly is an awesome interactive visualization library, however it can get pretty slow
+    when a lot of data points are visualized (100 000+ datapoints). Plotly-resampler
+    solves this by downsampling (aggregating) the data respective to the view and then
+    plotting the aggregated points. When you interact with the plot (panning, zooming, ...),
     callbacks are used to aggregate data and update the figure.
   doc_url: https://github.com/predict-idlab/plotly-resampler/blob/main/README.md
   dev_url: https://github.com/predict-idlab/plotly-resampler
